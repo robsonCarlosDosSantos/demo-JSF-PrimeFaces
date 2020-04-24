@@ -51,7 +51,7 @@
 					<p:commandButton id="btnGravar" value="Gravar" process="@form"
 						actionListener="#{fabricanteMB.salvarFabricante}"
 						oncomplete="PF('dlgFabNovo').hide();"
-						update="@form :modelo:principal:tblFabricante" />
+						update="@form :modelo:principal:tblFabricante :msgGlobal" />
 					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
 						onclick="PF('dlgFabNovo').hide();" />
 				</h:panelGrid>
