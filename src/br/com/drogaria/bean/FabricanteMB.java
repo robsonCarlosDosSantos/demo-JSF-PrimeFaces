@@ -63,11 +63,26 @@ public class FabricanteMB {
 		}
 	}
 	
+	public void editarFabricante() {
+		try {
+			FabricanteDAO dao = new FabricanteDAO();
+			dao.editar(fabricante);
+			
+			ArrayList<Fabricante> lista = dao.listar();
+			fabricantes = new ListDataModel<Fabricante>(lista);
+			
+			JSFUtil.msgSuccess("Fabricante editado com sucesso!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JSFUtil.msgError(e.getMessage());
+		}
+	}
+	
 	public void preparaNovo() {
 		fabricante = new Fabricante();
 	}
 	
-	public void preparaExcluir() {
+	public void prepara() {
 		fabricante = fabricantes.getRowData();
 	}
 

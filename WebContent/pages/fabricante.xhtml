@@ -29,11 +29,16 @@
 					sortBy="#{fabricante.descricao}" filterBy="#{fabricante.descricao}">
 					<h:outputText value="#{fabricante.descricao}" />
 				</p:column>
-				
-				<p:column>
-					<p:commandButton icon="ui-icon-trash" process="@this" actionListener="#{fabricanteMB.preparaExcluir}"
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash" process="@this"
+						actionListener="#{fabricanteMB.prepara}"
 						oncomplete="PF('dlgFabExcluir').show();"
-						update="@form :modelo:frmModalFabExcluir:pnlModalFabExcluir"/>
+						update="@form :modelo:frmModalFabExcluir:pnlModalFabExcluir" />
+					<p:commandButton icon="ui-icon-pencil" process="@this"
+						actionListener="#{fabricanteMB.prepara}"
+						oncomplete="PF('dlgFabEditar').show();"
+						update="@form :modelo:frmModalFabEditar:pnlModalFabEditar" />
 				</p:column>
 
 				<f:facet name="footer">
@@ -44,7 +49,7 @@
 				</f:facet>
 			</p:dataTable>
 		</h:form>
-		
+
 		<p:dialog id="modalFabNovo" header="Fabricante - Novo"
 			widgetVar="dlgFabNovo" closable="false" draggable="false"
 			resizable="false" modal="true" appendTo="@(body)">
@@ -64,16 +69,18 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
+
 		<p:dialog id="modalFabExcluir" header="Fabricante - Excluir"
 			widgetVar="dlgFabExcluir" closable="false" draggable="false"
 			resizable="false" modal="true" appendTo="@(body)">
 			<h:form id="frmModalFabExcluir">
 				<h:panelGrid id="pnlModalFabExcluir" columns="2">
 					<p:outputLabel id="lbCod" value="Código: " />
-					<p:outputLabel id="txtCod" value="#{fabricanteMB.fabricante.codigo}" />
+					<p:outputLabel id="txtCod"
+						value="#{fabricanteMB.fabricante.codigo}" />
 					<p:outputLabel id="lbDesc" value="Descrição: " />
-					<p:outputLabel id="txtDesc" value="#{fabricanteMB.fabricante.descricao}" />
+					<p:outputLabel id="txtDesc"
+						value="#{fabricanteMB.fabricante.descricao}" />
 				</h:panelGrid>
 				<h:panelGrid id="pnlBtn" columns="2">
 					<p:commandButton id="btnExcluir" value="Excluir" process="@form"
@@ -86,6 +93,26 @@
 			</h:form>
 		</p:dialog>
 		
+		<p:dialog id="modalFabEditar" header="Fabricante - Editar"
+			widgetVar="dlgFabEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)">
+			<h:form id="frmModalFabEditar">
+				<h:panelGrid id="pnlModalFabEditar" columns="2">
+					<p:outputLabel id="lbDesc" value="Descrição: " />
+					<p:inputText id="txtDesc" size="30" maxlength="50"
+						value="#{fabricanteMB.fabricante.descricao}" />
+				</h:panelGrid>
+				<h:panelGrid id="pnlBtn" columns="2">
+					<p:commandButton id="btnSalvar" value="Salvar" process="@form"
+						actionListener="#{fabricanteMB.editarFabricante}"
+						oncomplete="PF('dlgFabEditar').hide();"
+						update="@form :modelo:principal:tblFabricante :msgGlobal" />
+					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
+						onclick="PF('dlgFabEditar').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
 	</ui:define>
 
 </ui:composition>
