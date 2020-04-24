@@ -13,8 +13,8 @@
 
 	<ui:define name="conteudo">
 		<h:form id="principal">
-			<p:dataTable id="tblFabricante" value="#{fabricanteMB.fabricantes}"
-				var="fabricante" paginator="true" rows="10"
+			<p:dataTable id="tblFabricante" widgetVar="tabelaFabricantes" value="#{fabricanteMB.fabricantes}"
+				var="fabricante" filteredValue="#{fabricanteMB.fabricantesFilter}" paginator="true" rows="10"
 				emptyMessage="Nenhum registro encontrado.">
 
 				<f:facet name="header">
@@ -32,13 +32,17 @@
 
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-trash" process="@this"
-						actionListener="#{fabricanteMB.prepara}"
 						oncomplete="PF('dlgFabExcluir').show();"
-						update="@form :modelo:frmModalFabExcluir:pnlModalFabExcluir" />
+						update="@form :modelo:frmModalFabExcluir:pnlModalFabExcluir">
+						<f:setPropertyActionListener value="#{fabricante}"
+							target="#{fabricanteMB.fabricante}" />
+					</p:commandButton>
 					<p:commandButton icon="ui-icon-pencil" process="@this"
-						actionListener="#{fabricanteMB.prepara}"
 						oncomplete="PF('dlgFabEditar').show();"
-						update="@form :modelo:frmModalFabEditar:pnlModalFabEditar" />
+						update="@form :modelo:frmModalFabEditar:pnlModalFabEditar">
+						<f:setPropertyActionListener value="#{fabricante}"
+							target="#{fabricanteMB.fabricante}" />
+					</p:commandButton>
 				</p:column>
 
 				<f:facet name="footer">
@@ -62,7 +66,7 @@
 				<h:panelGrid id="pnlBtn" columns="2">
 					<p:commandButton id="btnGravar" value="Gravar" process="@form"
 						actionListener="#{fabricanteMB.salvarFabricante}"
-						oncomplete="PF('dlgFabNovo').hide();"
+						oncomplete="PF('dlgFabNovo').hide(); tabelaFabricantes.clearFilters();"
 						update="@form :modelo:principal:tblFabricante :msgGlobal" />
 					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
 						onclick="PF('dlgFabNovo').hide();" />
@@ -85,19 +89,22 @@
 				<h:panelGrid id="pnlBtn" columns="2">
 					<p:commandButton id="btnExcluir" value="Excluir" process="@form"
 						actionListener="#{fabricanteMB.excluirFabricante}"
-						oncomplete="PF('dlgFabExcluir').hide();"
+						oncomplete="PF('dlgFabExcluir').hide(); tabelaFabricantes.clearFilters();"
 						update="@form :modelo:principal:tblFabricante :msgGlobal" />
 					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
 						onclick="PF('dlgFabExcluir').hide();" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
+
 		<p:dialog id="modalFabEditar" header="Fabricante - Editar"
 			widgetVar="dlgFabEditar" closable="false" draggable="false"
 			resizable="false" modal="true" appendTo="@(body)">
 			<h:form id="frmModalFabEditar">
 				<h:panelGrid id="pnlModalFabEditar" columns="2">
+					<p:outputLabel id="lbCod" value="Código: " />
+					<p:outputLabel id="txtCod"
+						value="#{fabricanteMB.fabricante.codigo}" />
 					<p:outputLabel id="lbDesc" value="Descrição: " />
 					<p:inputText id="txtDesc" size="30" maxlength="50"
 						value="#{fabricanteMB.fabricante.descricao}" />
@@ -105,7 +112,7 @@
 				<h:panelGrid id="pnlBtn" columns="2">
 					<p:commandButton id="btnSalvar" value="Salvar" process="@form"
 						actionListener="#{fabricanteMB.editarFabricante}"
-						oncomplete="PF('dlgFabEditar').hide();"
+						oncomplete="PF('dlgFabEditar').hide(); tabelaFabricantes.clearFilters();"
 						update="@form :modelo:principal:tblFabricante :msgGlobal" />
 					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
 						onclick="PF('dlgFabEditar').hide();" />
