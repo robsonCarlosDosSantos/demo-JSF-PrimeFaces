@@ -29,15 +29,22 @@
 					sortBy="#{fabricante.descricao}" filterBy="#{fabricante.descricao}">
 					<h:outputText value="#{fabricante.descricao}" />
 				</p:column>
+				
+				<p:column>
+					<p:commandButton icon="ui-icon-trash" process="@this" actionListener="#{fabricanteMB.preparaExcluir}"
+						oncomplete="PF('dlgFabExcluir').show();"
+						update="@form :modelo:frmModalFabExcluir:pnlModalFabExcluir"/>
+				</p:column>
 
 				<f:facet name="footer">
 					<p:commandButton id="btnNovo" value="Novo" process="@this"
-						actionListener="#{fabricanteMB.preparaNovoFabricante}"
+						actionListener="#{fabricanteMB.preparaNovo}"
 						oncomplete="PF('dlgFabNovo').show();"
 						update="@form :modelo:frmModalFabNovo:pnlModalFabNovo" />
 				</f:facet>
 			</p:dataTable>
 		</h:form>
+		
 		<p:dialog id="modalFabNovo" header="Fabricante - Novo"
 			widgetVar="dlgFabNovo" closable="false" draggable="false"
 			resizable="false" modal="true" appendTo="@(body)">
@@ -57,6 +64,28 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
+		
+		<p:dialog id="modalFabExcluir" header="Fabricante - Excluir"
+			widgetVar="dlgFabExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)">
+			<h:form id="frmModalFabExcluir">
+				<h:panelGrid id="pnlModalFabExcluir" columns="2">
+					<p:outputLabel id="lbCod" value="Código: " />
+					<p:outputLabel id="txtCod" value="#{fabricanteMB.fabricante.codigo}" />
+					<p:outputLabel id="lbDesc" value="Descrição: " />
+					<p:outputLabel id="txtDesc" value="#{fabricanteMB.fabricante.descricao}" />
+				</h:panelGrid>
+				<h:panelGrid id="pnlBtn" columns="2">
+					<p:commandButton id="btnExcluir" value="Excluir" process="@form"
+						actionListener="#{fabricanteMB.excluirFabricante}"
+						oncomplete="PF('dlgFabExcluir').hide();"
+						update="@form :modelo:principal:tblFabricante :msgGlobal" />
+					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
+						onclick="PF('dlgFabExcluir').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
 	</ui:define>
 
 </ui:composition>

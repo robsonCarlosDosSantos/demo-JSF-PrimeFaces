@@ -34,8 +34,8 @@ public class FabricanteMB {
 	}
 	
 	public void salvarFabricante() {
-		FabricanteDAO dao = new FabricanteDAO();
 		try {
+			FabricanteDAO dao = new FabricanteDAO();
 			dao.salvar(fabricante);
 			
 			ArrayList<Fabricante> lista = dao.listar();
@@ -48,8 +48,27 @@ public class FabricanteMB {
 		}
 	}
 	
-	public void preparaNovoFabricante() {
+	public void excluirFabricante() {
+		try {
+			FabricanteDAO dao = new FabricanteDAO();
+			dao.excluir(fabricante);
+			
+			ArrayList<Fabricante> lista = dao.listar();
+			fabricantes = new ListDataModel<Fabricante>(lista);
+			
+			JSFUtil.msgSuccess("Fabricante excluido com sucesso!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JSFUtil.msgError(e.getMessage());
+		}
+	}
+	
+	public void preparaNovo() {
 		fabricante = new Fabricante();
+	}
+	
+	public void preparaExcluir() {
+		fabricante = fabricantes.getRowData();
 	}
 
 	public ListDataModel<Fabricante> getFabricantes() {
