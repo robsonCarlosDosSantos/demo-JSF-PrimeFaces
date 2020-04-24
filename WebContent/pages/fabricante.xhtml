@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="principal">
+			<p:dataTable id="tblFabricante" value="#{fabricanteMB.fabricantes}"
+				var="fabricante" paginator="true" rows="10"
+				emptyMessage="Nenhum registro encontrado.">
+
+				<f:facet name="header">
+        			Fabricante - Listagem
+    			</f:facet>
+				<p:column id="clCod" headerText="Código"
+					sortBy="#{fabricante.codigo}" filterBy="#{fabricante.codigo}">
+					<h:outputText value="#{fabricante.codigo}" />
+				</p:column>
+
+				<p:column id="clDesc" headerText="Descrição"
+					sortBy="#{fabricante.descricao}" filterBy="#{fabricante.descricao}">
+					<h:outputText value="#{fabricante.descricao}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton id="btnNovo" value="Novo" process="@this"
+						actionListener="#{fabricanteMB.preparaNovoFabricante}"
+						oncomplete="PF('dlgFabNovo').show();"
+						update="@form :modelo:frmModalFabNovo:pnlModalFabNovo" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+		<p:dialog id="modalFabNovo" header="Fabricante - Novo"
+			widgetVar="dlgFabNovo" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)">
+			<h:form id="frmModalFabNovo">
+				<h:panelGrid id="pnlModalFabNovo" columns="2">
+					<p:outputLabel id="lbDesc" value="Descrição: " />
+					<p:inputText id="txtDesc" size="30" maxlength="50"
+						value="#{fabricanteMB.fabricante.descricao}" />
+				</h:panelGrid>
+				<h:panelGrid id="pnlBtn" columns="2">
+					<p:commandButton id="btnGravar" value="Gravar" process="@form"
+						actionListener="#{fabricanteMB.salvarFabricante}"
+						oncomplete="PF('dlgFabNovo').hide();"
+						update="@form :modelo:principal:tblFabricante" />
+					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
+						onclick="PF('dlgFabNovo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
