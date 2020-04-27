@@ -59,14 +59,15 @@
 			resizable="false" modal="true" appendTo="@(body)">
 			<h:form id="frmModalFabNovo">
 				<h:panelGrid id="pnlModalFabNovo" columns="2">
-					<p:outputLabel id="lbDesc" value="Descrição: " />
+					<p:outputLabel id="lbDesc" for="txtDesc" value="Descrição: " />
 					<p:inputText id="txtDesc" size="30" maxlength="50"
-						value="#{fabricanteMB.fabricante.descricao}" />
+						value="#{fabricanteMB.fabricante.descricao}"
+						required="true" requiredMessage="Campo descrição obrigatório!"/>
 				</h:panelGrid>
 				<h:panelGrid id="pnlBtn" columns="2">
 					<p:commandButton id="btnGravar" value="Gravar" process="@form"
 						actionListener="#{fabricanteMB.salvarFabricante}"
-						oncomplete="PF('dlgFabNovo').hide(); tabelaFabricantes.clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgFabNovo', 'tabelaFabricantes')"
 						update="@form :modelo:principal:tblFabricante :msgGlobal" />
 					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
 						onclick="PF('dlgFabNovo').hide();" />
@@ -105,14 +106,15 @@
 					<p:outputLabel id="lbCod" value="Código: " />
 					<p:outputLabel id="txtCod"
 						value="#{fabricanteMB.fabricante.codigo}" />
-					<p:outputLabel id="lbDesc" value="Descrição: " />
+					<p:outputLabel id="lbDesc" for="txtDesc" value="Descrição: " />
 					<p:inputText id="txtDesc" size="30" maxlength="50"
-						value="#{fabricanteMB.fabricante.descricao}" />
+						value="#{fabricanteMB.fabricante.descricao}" 
+						required="true" requiredMessage="Campo descrição obrigatório!"/>
 				</h:panelGrid>
 				<h:panelGrid id="pnlBtn" columns="2">
 					<p:commandButton id="btnSalvar" value="Salvar" process="@form"
 						actionListener="#{fabricanteMB.editarFabricante}"
-						oncomplete="PF('dlgFabEditar').hide(); tabelaFabricantes.clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgFabEditar', 'tabelaFabricantes')"
 						update="@form :modelo:principal:tblFabricante :msgGlobal" />
 					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
 						onclick="PF('dlgFabEditar').hide();" />
