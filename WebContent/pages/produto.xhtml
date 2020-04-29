@@ -81,20 +81,24 @@
 			resizable="false" modal="true" appendTo="@(body)">
 			<h:form id="frmModalProdNovo">
 				<h:panelGrid id="pnlModalProdNovo" columns="2">
-					<p:outputLabel value="Descrição: " />
-					<p:inputText size="30" maxlength="50"
-						value="#{produtoMB.produto.descricao}" />
+					<p:outputLabel for="txtDescNovo" value="Descrição: " />
+					<p:inputText id="txtDescNovo" size="30" maxlength="50"
+						value="#{produtoMB.produto.descricao}" 
+						required="true" requiredMessage="Campo descrição obrigatório"/>
 
-					<p:outputLabel value="Quantidade: " />
-					<p:inputText size="10" maxlength="10"
-						value="#{produtoMB.produto.quantidade}" />
+					<p:outputLabel for="txtQtdNovo" value="Quantidade: " />
+					<p:inputText id="txtQtdNovo" size="10" maxlength="10"
+						value="#{produtoMB.produto.quantidade}" 
+						required="true" requiredMessage="Campo quantidade obrigatório"/>
 
-					<p:outputLabel value="Preço: " />
-					<p:inputText size="10" maxlength="10"
-						value="#{produtoMB.produto.preco}" />
+					<p:outputLabel for="txtPrecoNovo" value="Preço: " />
+					<p:inputText id="txtPrecoNovo" size="10" maxlength="10"
+						value="#{produtoMB.produto.preco}" 
+						required="true" requiredMessage="Campo preço obrigatório"/>
 
-					<p:outputLabel value="Fabricante: " />
-					<p:selectOneMenu value="#{produtoMB.produto.fabricante.codigo}" filter="true">
+					<p:outputLabel for="cbFabNovo" value="Fabricante: " />
+					<p:selectOneMenu id="cbFabNovo" value="#{produtoMB.produto.fabricante.codigo}" filter="true"
+									required="true" requiredMessage="Campo fabricante obrigatório">
 						<f:selectItem itemValue="" itemLabel="- Selecione Fabricante -"/>
 						<f:selectItems value="#{produtoMB.comboFabriante}" var="item" itemValue="#{item.codigo}" itemLabel="#{item.descricao}"/>
 					</p:selectOneMenu>
@@ -102,7 +106,7 @@
 				<h:panelGrid columns="2">
 					<p:commandButton value="Gravar" process="@form"
 						actionListener="#{produtoMB.salvarProduto}"
-						oncomplete="PF('dlgProdNovo').hide(); tabelaProdutos.clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgProdNovo' ,'tabelaProdutos')"
 						update="@form :modelo:principal:tblProduto :msgGlobal" />
 					<p:commandButton value="Cancelar" process="@this"
 						onclick="PF('dlgProdNovo').hide();" />
@@ -150,20 +154,24 @@
 					<p:outputLabel value="Código: " />
 					<h:outputText value="#{produtoMB.produto.codigo}" />
 					
-					<p:outputLabel value="Descrição: " />
-					<p:inputText size="30" maxlength="50"
-						value="#{produtoMB.produto.descricao}" />
+					<p:outputLabel for="txtDescEditar" value="Descrição: " />
+					<p:inputText id="txtDescEditar" size="30" maxlength="50"
+						value="#{produtoMB.produto.descricao}" 
+						required="true" requiredMessage="Campo descrição obrigatório"/>
 						
-					<p:outputLabel value="Quantidade: " />
-					<p:inputText size="10" maxlength="10"
-						value="#{produtoMB.produto.quantidade}" />
+					<p:outputLabel for="txtQtdEditar" value="Quantidade: " />
+					<p:inputText id="txtQtdEditar" size="10" maxlength="10"
+						value="#{produtoMB.produto.quantidade}" 
+						required="true" requiredMessage="Campo quantidade obrigatório"/>
 
-					<p:outputLabel value="Preço: " />
-					<p:inputText size="10" maxlength="10"
-						value="#{produtoMB.produto.preco}" />
+					<p:outputLabel for="txtPrecoEditar" value="Preço: " />
+					<p:inputText id="txtPrecoEditar" size="10" maxlength="10"
+						value="#{produtoMB.produto.preco}" 
+						required="true" requiredMessage="Campo preço obrigatório"/>
 
-					<p:outputLabel value="Fabricante: " />
-					<p:selectOneMenu value="#{produtoMB.produto.fabricante.codigo}" filter="true">
+					<p:outputLabel for="cbFabricanteEditar" value="Fabricante: " />
+					<p:selectOneMenu id="cbFabricanteEditar" value="#{produtoMB.produto.fabricante.codigo}" filter="true" 
+					required="true" requiredMessage="Campo fabricante obrigatório">
 						<f:selectItem itemValue="" itemLabel="- Selecione Fabricante -"/>
 						<f:selectItems value="#{produtoMB.comboFabriante}" var="item" itemValue="#{item.codigo}" itemLabel="#{item.descricao}"/>
 					</p:selectOneMenu>
@@ -171,7 +179,7 @@
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar" process="@form"
 						actionListener="#{produtoMB.editarProduto}"
-						oncomplete="PF('dlgProdEditar').hide(); tabelaProdutos.clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgProdEditar', 'tabelaProdutos')"
 						update="@form :modelo:principal:tblProduto :msgGlobal" />
 					<p:commandButton id="btnCancelar" value="Cancelar" process="@this"
 						onclick="PF('dlgProdEditar').hide();" />
